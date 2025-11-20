@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Planning Tools | Porunai Wealth Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e6b46;
+            --primary-dark: #155537;
+            --accent: #d4af37;
+            --secondary: #1E90FF;
+            --light: #f5f6fa;
+            --text: #333;
+            --white: #ffffff;
+            --dark-bg: #2F4F4F;
+            --transition: all 0.3s ease;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --radius: 10px;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            color: var(--text); 
+            line-height: 1.6; 
+            background-color: var(--light);
+        }
+        
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .text-center { text-align: center; }
+        
+        /* Header Styles */
+        header { 
+            background: var(--white); 
+            padding: 1rem 5%; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo-container { 
+            display: flex; 
+            align-items: center; 
+            text-decoration: none !important;
+        }
+        .logo-container a {
+            text-decoration: none !important;
+            display: flex;
+            align-items: center;
+        }
+        .logo-container img { 
+            height: 45px; 
+            margin-right: 10px; 
+            text-decoration: none !important;
+        }
+        .logo-content { 
+            display: flex; 
+            flex-direction: column; 
+            line-height: 1.2; 
+            text-decoration: none !important;
+        }
+        .logo-content .name { 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            color: var(--primary);
+            text-decoration: none !important;
+        }
+        .logo-content .tagline { 
+            font-size: 0.8rem; 
+            color: var(--accent); 
+            font-weight: 500;
+            text-decoration: none !important;
+        }
+        
+        /* Hero Section */
+        .tools-hero {
+            background: linear-gradient(rgba(30, 107, 70, 0.9), rgba(30, 107, 70, 0.85)), url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1911&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .tools-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tools-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        /* Tool Navigation */
+        .tool-nav {
+            background: var(--white);
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 80px;
+            z-index: 99;
+        }
+        
+        .tool-nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .tool-nav-item {
+            padding: 1rem 1.5rem;
+            background: var(--light);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            border: 2px solid transparent;
+            text-align: center;
+            min-width: 140px;
+        }
+        
+        .tool-nav-item.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--accent);
+        }
+        
+        .tool-nav-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            min-height: 60vh;
+            padding: 3rem 0;
+        }
+        
+        /* Tool Sections */
+        .tool-section {
+            display: none;
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .tool-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        /* Risk Profiler Styles */
+        .risk-progress {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .risk-question {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--light);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .risk-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .risk-option {
+            padding: 1.5rem;
+            background: var(--white);
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .risk-option:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .risk-option.selected {
+            border-color: var(--primary);
+            background: rgba(30, 107, 70, 0.05);
+        }
+        
+        /* Calculator Grid */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .calculator-card {
+            background: var(--light);
+            padding: 2rem 1.5rem;
+            border-radius: var(--radius);
+            border-top: 5px solid var(--accent);
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .calculator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .calculator-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .calculator-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+        }
+        
+        .calculator-card p {
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        /* Calculator Form Layout */
+        .calculator-form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+            align-items: start;
+        }
+        
+        .calculator-form {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: var(--radius);
+        }
+        
+        .calculator-result {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--accent);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 107, 70, 0.1);
+        }
+        
+        .submit-btn {
+            background: var(--primary);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 107, 70, 0.3);
+        }
+        
+        /* Result Styles */
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .result-breakdown {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: var(--radius);
+        }
+        
+        .risk-profile-result {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .profile-type {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .profile-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .recommendation {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Footer */
+        .tools-footer {
+            background: var(--dark-bg);
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .back-to-main {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .back-to-main:hover {
+            background: #e0c265;
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .tools-hero {
+                padding: 80px 0;
+            }
+            
+            .tools-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .tools-hero p {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+            
+            .tool-nav {
+                top: 70px;
+                padding: 1rem 0;
+            }
+            
+            .tool-nav-container {
+                gap: 0.5rem;
+            }
+            
+            .tool-nav-item {
+                padding: 0.8rem 1rem;
+                min-width: 120px;
+                font-size: 0.9rem;
+            }
+            
+            .tool-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+            
+            .calculator-form-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .calculator-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .risk-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .risk-question {
+                padding: 1.5rem;
+            }
+            
+            .calculator-form, .calculator-result {
+                padding: 1.5rem;
+            }
+            
+            .result-value {
+                font-size: 1.6rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tools-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tool-nav-item {
+                min-width: 100px;
+                padding: 0.7rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .tool-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="index.html" style="text-decoration: none;">
+                <img src="image.png" alt="Porunai Wealth Management">
+                <div class="logo-content">
+                    <span class="name">Porunai Wealth</span>
+                    <span class="tagline">Flow. Grow. Prosper.</span>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <section class="tools-hero">
+        <div class="container">
+            <h1>Smart Financial Planning Tools</h1>
+            <p>Make informed investment decisions with our interactive calculators and risk assessment tools. Understand your financial personality and plan your wealth journey with confidence.</p>
+        </div>
+    </section>
+
+    <section class="tool-nav">
+        <div class="container">
+            <div class="tool-nav-container">
+                <div class="tool-nav-item active" data-tool="risk-profiler">Risk Profiler</div>
+                <div class="tool-nav-item" data-tool="calculators">Financial Calculators</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="main-content">
+        <div class="container">
+            <!-- Risk Profiler Section -->
+            <div class="tool-section active" id="risk-profiler">
+                <h2 class="section-title">Discover Your Investment Personality</h2>
+                <p style="text-align: center; margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    Understanding your risk tolerance is the first step toward building a successful investment portfolio. This 5-minute assessment will help identify your comfort level with market fluctuations and recommend suitable investment strategies.
+                </p>
+                
+                <div class="risk-progress" id="risk-progress">Question 1 of 5</div>
+                
+                <div id="risk-questions">
+                    <!-- Question 1 -->
+                    <div class="risk-question" id="question-1">
+                        <h3>1. How would you react if your investment dropped 20% in value over a short period?</h3>
+                        <div class="risk-options">
+                            <div class="risk-option" data-value="1">I would sell immediately to prevent further losses</div>
+                            <div class="risk-option" data-value="2">I would be concerned but wait to see if it recovers</div>
+                            <div class="risk-option" data-value="3">I would see it as a buying opportunity and invest more</div>
+                            <div class="risk-option" data-value="4">I wouldn't check my portfolio frequently enough to notice</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 2 -->
+                    <div class="risk-question" id="question-2" style="display: none;">
+                        <h3>2. What is your primary investment goal?</h3>
+                        <div class="risk-options">
+                            <div class="risk-option" data-value="1">Preserve my capital with minimal risk</div>
+                            <div class="risk-option" data-value="2">Generate steady income with some growth</div>
+                            <div class="risk-option" data-value="3">Balance between growth and safety</div>
+                            <div class="risk-option" data-value="4">Maximize long-term growth, accepting volatility</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 3 -->
+                    <div class="risk-question" id="question-3" style="display: none;">
+                        <h3>3. Your investment time horizon is:</h3>
+                        <div class="risk-options">
+                            <div class="risk-option" data-value="1">Less than 2 years</div>
+                            <div class="risk-option" data-value="2">2-5 years</div>
+                            <div class="risk-option" data-value="3">5-10 years</div>
+                            <div class="risk-option" data-value="4">More than 10 years</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 4 -->
+                    <div class="risk-question" id="question-4" style="display: none;">
+                        <h3>4. How familiar are you with investment concepts?</h3>
+                        <div class="risk-options">
+                            <div class="risk-option" data-value="1">New to investing</div>
+                            <div class="risk-option" data-value="2">Know basic concepts like stocks and bonds</div>
+                            <div class="risk-option" data-value="3">Comfortable with mutual funds and market cycles</div>
+                            <div class="risk-option" data-value="4">Experienced with various asset classes and strategies</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 5 -->
+                    <div class="risk-question" id="question-5" style="display: none;">
+                        <h3>5. What percentage of your income do you currently invest?</h3>
+                        <div class="risk-options">
+                            <div class="risk-option" data-value="1">Less than 5%</div>
+                            <div class="risk-option" data-value="2">5-15%</div>
+                            <div class="risk-option" data-value="3">15-25%</div>
+                            <div class="risk-option" data-value="4">More than 25%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="risk-nav" style="text-align: center; margin-top: 2rem;">
+                    <button class="submit-btn" id="prev-question" style="display: none; width: auto; margin-right: 1rem;">Previous</button>
+                    <button class="submit-btn" id="next-question" style="display: none; width: auto;">Next Question</button>
+                    <button class="submit-btn" id="show-results" style="display: none; width: auto;">See My Risk Profile</button>
+                </div>
+                
+                <div class="calculator-result" id="risk-result" style="display: none;">
+                    <div class="risk-profile-result">
+                        <div class="profile-type" id="profile-type">Conservative Investor</div>
+                        <div class="profile-description" id="profile-description">
+                            You prefer safety and stability over high returns. Your portfolio should focus on capital preservation with minimal exposure to market volatility.
+                        </div>
+                        <div class="recommendation">
+                            <h4>Recommended Asset Allocation:</h4>
+                            <div id="asset-allocation">70% Debt, 20% Equity, 10% Gold</div>
+                            <p style="margin-top: 1rem; font-size: 0.9rem;">
+                                <strong>Note:</strong> This is a general recommendation based on your risk profile. For personalized advice, consult with our financial experts.
+                            </p>
+                        </div>
+                        <button class="submit-btn" style="width: auto; margin-top: 1.5rem;" onclick="window.location.href='index.html#contact'">
+                            Get Personalized Advice
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculators Section -->
+            <div class="tool-section" id="calculators">
+                <h2 class="section-title">Financial Calculators</h2>
+                <p style="text-align: center; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    Plan your financial future with precision. Choose from our specialized calculators to understand complex financial concepts and make informed investment decisions.
+                </p>
+                
+                <div class="calculator-grid">
+                    <!-- Retirement Calculator -->
+                    <div class="calculator-card" data-calc="retirement">
+                        <div class="calculator-icon">
+                            <i class="fas fa-umbrella-beach"></i>
+                        </div>
+                        <h3>Retirement Planner</h3>
+                        <p>Calculate how much you need to save for a comfortable retirement and if you're on track.</p>
+                        <button class="submit-btn" style="width: auto;">Calculate</button>
+                    </div>
+                    
+                    <!-- Education Calculator -->
+                    <div class="calculator-card" data-calc="education">
+                        <div class="calculator-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Education Fund</h3>
+                        <p>Plan for your children's education expenses and calculate the required investments.</p>
+                        <button class="submit-btn" style="width: auto;">Calculate</button>
+                    </div>
+                    
+                    <!-- Lump Sum Calculator -->
+                    <div class="calculator-card" data-calc="lumpsum">
+                        <div class="calculator-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3>Lump Sum Calculator</h3>
+                        <p>Calculate future value of one-time investments and plan your lump sum investments.</p>
+                        <button class="submit-btn" style="width: auto;">Calculate</button>
+                    </div>
+                    
+                    <!-- SIP Calculator -->
+                    <div class="calculator-card" data-calc="sip">
+                        <div class="calculator-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>SIP Calculator</h3>
+                        <p>Calculate returns from systematic monthly investments and plan your SIP journey.</p>
+                        <button class="submit-btn" style="width: auto;">Calculate</button>
+                    </div>
+                    
+                    <!-- Inflation Calculator -->
+                    <div class="calculator-card" data-calc="inflation">
+                        <div class="calculator-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Inflation Impact</h3>
+                        <p>Understand how inflation affects your future purchasing power and investment goals.</p>
+                        <button class="submit-btn" style="width: auto;">Calculate</button>
+                    </div>
+                </div>
+                
+                <!-- Calculator Forms Container -->
+                <div id="calculator-forms-container">
+                    <!-- Forms will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tools-footer">
+        <div class="container">
+            <p>Ready to take the next step in your financial journey?</p>
+            <a href="index.html#contact" class="back-to-main">Get Personalized Advice</a>
+        </div>
+    </section>
+	<script>
+    // Fix page load behavior - prevent auto-scrolling on load
+    let pageJustLoaded = true;
+    
+    // Improved scrolling function for calculator results
+    function scrollToResult(resultElement) {
+        // Calculate the total height of sticky elements
+        const header = document.querySelector('header');
+        const toolNav = document.querySelector('.tool-nav');
+        
+        const headerHeight = header ? header.offsetHeight : 80;
+        const toolNavHeight = toolNav ? toolNav.offsetHeight : 80;
+        
+        const totalStickyHeight = headerHeight + toolNavHeight + 20; // 20px extra padding
+        
+        // Calculate the position to scroll to
+        const elementPosition = resultElement.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - totalStickyHeight;
+        
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+        });
+    }
+
+    // Tool Navigation with gentle scrolling
+    document.querySelectorAll('.tool-nav-item').forEach(item => {
+        item.addEventListener('click', function() {
+            // Update active nav
+            document.querySelectorAll('.tool-nav-item').forEach(nav => nav.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Show corresponding section
+            const toolId = this.getAttribute('data-tool');
+            document.querySelectorAll('.tool-section').forEach(section => section.classList.remove('active'));
+            document.getElementById(toolId).classList.add('active');
+            
+            // Clear calculator forms when switching
+            document.getElementById('calculator-forms-container').innerHTML = '';
+            
+            // Gentle scroll to the active section (only if not on page load)
+            if (!pageJustLoaded) {
+                setTimeout(() => {
+                    // Calculate sticky elements height for proper scrolling
+                    const header = document.querySelector('header');
+                    const toolNav = document.querySelector('.tool-nav');
+                    const headerHeight = header ? header.offsetHeight : 80;
+                    const toolNavHeight = toolNav ? toolNav.offsetHeight : 80;
+                    const totalStickyHeight = headerHeight + toolNavHeight + 20;
+                    
+                    const element = document.getElementById(toolId);
+                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - totalStickyHeight;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            }
+            pageJustLoaded = false;
+        });
+    });
+
+    // Risk Profiler Logic
+    let currentQuestion = 1;
+    const totalQuestions = 5;
+    let userAnswers = [];
+    
+    // Initialize first question
+    document.getElementById('risk-progress').textContent = `Question ${currentQuestion} of ${totalQuestions}`;
+    
+    // Risk option selection with auto-advance
+    document.querySelectorAll('.risk-option').forEach(option => {
+        option.addEventListener('click', function() {
+            // Remove selection from siblings in current question
+            const currentQuestionElement = document.getElementById(`question-${currentQuestion}`);
+            currentQuestionElement.querySelectorAll('.risk-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Select current
+            this.classList.add('selected');
+            
+            // Store answer
+            const value = parseInt(this.getAttribute('data-value'));
+            userAnswers[currentQuestion - 1] = value;
+            
+            // Auto-advance to next question after 500ms
+            setTimeout(() => {
+                if (currentQuestion < totalQuestions) {
+                    nextQuestion();
+                } else {
+                    // Last question - show results button
+                    document.getElementById('show-results').style.display = 'inline-block';
+                    document.getElementById('next-question').style.display = 'none';
+                }
+            }, 500);
+        });
+    });
+    
+    function nextQuestion() {
+        if (currentQuestion < totalQuestions) {
+            // Hide current question
+            document.getElementById(`question-${currentQuestion}`).style.display = 'none';
+            currentQuestion++;
+            // Show next question
+            document.getElementById(`question-${currentQuestion}`).style.display = 'block';
+            
+            // Update progress
+            document.getElementById('risk-progress').textContent = `Question ${currentQuestion} of ${totalQuestions}`;
+            
+            // Update navigation
+            document.getElementById('prev-question').style.display = 'inline-block';
+            document.getElementById('next-question').style.display = 'none';
+            
+            if (currentQuestion === totalQuestions) {
+                document.getElementById('show-results').style.display = 'none';
+            }
+            
+            // Gentle scroll to current question with proper offset
+            const questionElement = document.getElementById(`question-${currentQuestion}`);
+            const header = document.querySelector('header');
+            const toolNav = document.querySelector('.tool-nav');
+            const headerHeight = header ? header.offsetHeight : 80;
+            const toolNavHeight = toolNav ? toolNav.offsetHeight : 80;
+            const totalStickyHeight = headerHeight + toolNavHeight + 20;
+            
+            const elementPosition = questionElement.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - totalStickyHeight;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    }
+    
+    function prevQuestion() {
+        if (currentQuestion > 1) {
+            document.getElementById(`question-${currentQuestion}`).style.display = 'none';
+            currentQuestion--;
+            document.getElementById(`question-${currentQuestion}`).style.display = 'block';
+            
+            // Update progress
+            document.getElementById('risk-progress').textContent = `Question ${currentQuestion} of ${totalQuestions}`;
+            
+            document.getElementById('next-question').style.display = 'none';
+            document.getElementById('show-results').style.display = 'none';
+            
+            if (currentQuestion === 1) {
+                document.getElementById('prev-question').style.display = 'none';
+            }
+            
+            // Gentle scroll to current question with proper offset
+            const questionElement = document.getElementById(`question-${currentQuestion}`);
+            const header = document.querySelector('header');
+            const toolNav = document.querySelector('.tool-nav');
+            const headerHeight = header ? header.offsetHeight : 80;
+            const toolNavHeight = toolNav ? toolNav.offsetHeight : 80;
+            const totalStickyHeight = headerHeight + toolNavHeight + 20;
+            
+            const elementPosition = questionElement.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - totalStickyHeight;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    }
+    
+    document.getElementById('next-question').addEventListener('click', nextQuestion);
+    document.getElementById('prev-question').addEventListener('click', prevQuestion);
+    
+    // Show results
+    document.getElementById('show-results').addEventListener('click', function() {
+        calculateRiskProfile();
+    });
+    
+    function calculateRiskProfile() {
+        const profiles = [
+            { 
+                type: "Conservative", 
+                desc: "You prefer safety and stability over high returns. Your portfolio should focus on capital preservation with minimal exposure to market volatility.", 
+                allocation: "70% Debt, 20% Equity, 10% Gold",
+                color: "#1e6b46"
+            },
+            { 
+                type: "Moderately Conservative", 
+                desc: "You're comfortable with some risk for better returns. A balanced approach that provides growth while maintaining some safety suits your personality.", 
+                allocation: "50% Debt, 40% Equity, 10% Gold",
+                color: "#2e7d5a"
+            },
+            { 
+                type: "Moderate", 
+                desc: "You understand market cycles and can handle moderate fluctuations for better growth potential. You're willing to accept some volatility for higher returns.", 
+                allocation: "30% Debt, 60% Equity, 10% Gold",
+                color: "#d4af37"
+            },
+            { 
+                type: "Aggressive", 
+                desc: "You're comfortable with high risk for potentially higher returns over the long term. You understand that markets fluctuate and are prepared to ride out volatility.", 
+                allocation: "10% Debt, 80% Equity, 10% Gold",
+                color: "#e74c3c"
+            }
+        ];
+        
+        // Calculate total score
+        let totalScore = 0;
+        userAnswers.forEach(answer => {
+            if (answer) totalScore += answer;
+        });
+        
+        const avgScore = totalScore / userAnswers.length;
+        let profileIndex = 0;
+        
+        if (avgScore <= 1.5) profileIndex = 0;
+        else if (avgScore <= 2.5) profileIndex = 1;
+        else if (avgScore <= 3.5) profileIndex = 2;
+        else profileIndex = 3;
+        
+        const profile = profiles[profileIndex];
+        
+        document.getElementById('profile-type').textContent = profile.type + " Investor";
+        document.getElementById('profile-type').style.color = profile.color;
+        document.getElementById('profile-description').textContent = profile.desc;
+        document.getElementById('asset-allocation').textContent = profile.allocation;
+        
+        // Hide questions and show results
+        document.getElementById('risk-questions').style.display = 'none';
+        document.getElementById('risk-progress').style.display = 'none';
+        document.querySelector('.risk-nav').style.display = 'none';
+        document.getElementById('risk-result').style.display = 'block';
+        
+        // Gentle scroll to results with proper offset
+        const resultElement = document.getElementById('risk-result');
+        const header = document.querySelector('header');
+        const toolNav = document.querySelector('.tool-nav');
+        const headerHeight = header ? header.offsetHeight : 80;
+        const toolNavHeight = toolNav ? toolNav.offsetHeight : 80;
+        const totalStickyHeight = headerHeight + toolNavHeight + 20;
+        
+        const elementPosition = resultElement.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - totalStickyHeight;
+        
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+        });
+    }
+
+    // Calculator Cards
+    document.querySelectorAll('.calculator-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const calcType = this.getAttribute('data-calc');
+            loadCalculator(calcType);
+            
+            // Gentle scroll to calculator form with proper offset
+            setTimeout(() => {
+                const formsContainer = document.getElementById('calculator-forms-container');
+                const header = document.querySelector('header');
+                const toolNav = document.querySelector('.tool-nav');
+                const headerHeight = header ? header.offsetHeight : 80;
+                const toolNavHeight = toolNav ? toolNav.offsetHeight : 80;
+                const totalStickyHeight = headerHeight + toolNavHeight + 20;
+                
+                const elementPosition = formsContainer.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - totalStickyHeight;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }, 300);
+        });
+    });
+    
+    function loadCalculator(type) {
+        const formsContainer = document.getElementById('calculator-forms-container');
+        let formHTML = '';
+        
+        switch(type) {
+            case 'retirement':
+                formHTML = `
+                    <div class="calculator-form-container">
+                        <div class="calculator-form">
+                            <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary);">Retirement Planner</h3>
+                            <div class="form-group">
+                                <label for="current-age">Current Age</label>
+                                <input type="number" id="current-age" placeholder="e.g., 35" min="18" max="70" value="35">
+                            </div>
+                            <div class="form-group">
+                                <label for="retirement-age">Planned Retirement Age</label>
+                                <input type="number" id="retirement-age" placeholder="e.g., 60" min="40" max="80" value="60">
+                            </div>
+                            <div class="form-group">
+                                <label for="current-savings">Current Retirement Savings (₹)</label>
+                                <input type="number" id="current-savings" placeholder="e.g., 500000" min="0" value="500000">
+                            </div>
+                            <div class="form-group">
+                                <label for="monthly-savings">Monthly Savings for Retirement (₹)</label>
+                                <input type="number" id="monthly-savings" placeholder="e.g., 10000" min="0" value="10000">
+                            </div>
+                            <div class="form-group">
+                                <label for="expected-returns">Expected Annual Returns (%)</label>
+                                <input type="number" id="expected-returns" placeholder="e.g., 12" min="1" max="20" step="0.1" value="12">
+                            </div>
+                            <button class="submit-btn" onclick="calculateRetirement()">Calculate Retirement Corpus</button>
+                        </div>
+                        <div class="calculator-result" id="retirement-result">
+                            <h4>Your Retirement Projection</h4>
+                            <div class="result-value" id="retirement-corpus">₹ 0</div>
+                            <p>This is the estimated amount you'll have at retirement based on your current savings and contributions.</p>
+                            <div class="result-breakdown">
+                                <h5>Breakdown:</h5>
+                                <div id="retirement-breakdown"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                break;
+                
+            case 'education':
+                formHTML = `
+                    <div class="calculator-form-container">
+                        <div class="calculator-form">
+                            <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary);">Education Fund Calculator</h3>
+                            <div class="form-group">
+                                <label for="child-age">Child's Current Age</label>
+                                <input type="number" id="child-age" placeholder="e.g., 5" min="0" max="18" value="5">
+                            </div>
+                            <div class="form-group">
+                                <label for="college-age">Age when college starts</label>
+                                <input type="number" id="college-age" placeholder="e.g., 18" min="18" max="25" value="18">
+                            </div>
+                            <div class="form-group">
+                                <label for="current-cost">Current annual education cost (₹)</label>
+                                <input type="number" id="current-cost" placeholder="e.g., 500000" min="0" value="500000">
+                            </div>
+                            <div class="form-group">
+                                <label for="inflation-rate">Expected education inflation rate (%)</label>
+                                <input type="number" id="inflation-rate" placeholder="e.g., 7" min="1" max="15" step="0.1" value="7">
+                            </div>
+                            <div class="form-group">
+                                <label for="expected-returns-edu">Expected annual returns (%)</label>
+                                <input type="number" id="expected-returns-edu" placeholder="e.g., 12" min="1" max="20" step="0.1" value="12">
+                            </div>
+                            <button class="submit-btn" onclick="calculateEducation()">Calculate Education Fund</button>
+                        </div>
+                        <div class="calculator-result" id="education-result">
+                            <h4>Education Fund Requirement</h4>
+                            <div class="result-value" id="education-corpus">₹ 0</div>
+                            <p>This is the estimated amount you'll need when your child starts college.</p>
+                            <div class="result-breakdown">
+                                <h5>Monthly investment needed:</h5>
+                                <div class="result-value" id="monthly-investment">₹ 0</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                break;
+                
+            case 'lumpsum':
+                formHTML = `
+                    <div class="calculator-form-container">
+                        <div class="calculator-form">
+                            <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary);">Lump Sum Calculator</h3>
+                            <p style="text-align: center; margin-bottom: 1.5rem; color: #666;">Calculate future value of your one-time investment</p>
+                            
+                            <div class="form-group">
+                                <label for="lumpsum-amount">Investment Amount (₹)</label>
+                                <input type="number" id="lumpsum-amount" placeholder="e.g., 500000" min="0" value="500000">
+                            </div>
+                            <div class="form-group">
+                                <label for="investment-period-lumpsum">Investment Period (years)</label>
+                                <input type="number" id="investment-period-lumpsum" placeholder="e.g., 10" min="1" max="30" value="10">
+                            </div>
+                            <div class="form-group">
+                                <label for="expected-returns-lumpsum">Expected Annual Returns (%)</label>
+                                <input type="number" id="expected-returns-lumpsum" placeholder="e.g., 12" min="1" max="20" step="0.1" value="12">
+                            </div>
+                            
+                            <button class="submit-btn" onclick="calculateLumpSum()">Calculate Future Value</button>
+                        </div>
+                        <div class="calculator-result" id="lumpsum-result">
+                            <h4>Lump Sum Investment Result</h4>
+                            <div class="result-value" id="lumpsum-future-value">₹ 0</div>
+                            <p>This is what your lump sum investment will grow to in the specified period.</p>
+                            <div class="result-breakdown">
+                                <h5>Investment Growth:</h5>
+                                <div id="lumpsum-growth"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                break;
+                
+            case 'sip':
+                formHTML = `
+                    <div class="calculator-form-container">
+                        <div class="calculator-form">
+                            <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary);">SIP Calculator</h3>
+                            <p style="text-align: center; margin-bottom: 1.5rem; color: #666;">Calculate returns from systematic monthly investments</p>
+                            
+                            <div class="form-group">
+                                <label for="sip-amount">Monthly SIP Amount (₹)</label>
+                                <input type="number" id="sip-amount" placeholder="e.g., 10000" min="0" value="10000">
+                            </div>
+                            <div class="form-group">
+                                <label for="investment-period-sip">Investment Period (years)</label>
+                                <input type="number" id="investment-period-sip" placeholder="e.g., 10" min="1" max="30" value="10">
+                            </div>
+                            <div class="form-group">
+                                <label for="expected-returns-sip">Expected Annual Returns (%)</label>
+                                <input type="number" id="expected-returns-sip" placeholder="e.g., 12" min="1" max="20" step="0.1" value="12">
+                            </div>
+                            
+                            <button class="submit-btn" onclick="calculateSIP()">Calculate SIP Returns</button>
+                        </div>
+                        <div class="calculator-result" id="sip-result">
+                            <h4>SIP Investment Result</h4>
+                            <div class="result-value" id="sip-future-value">₹ 0</div>
+                            <p>This is what your systematic monthly investments will grow to.</p>
+                            <div class="result-breakdown">
+                                <h5>Investment Summary:</h5>
+                                <div id="sip-summary"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                break;
+                
+            case 'inflation':
+                formHTML = `
+                    <div class="calculator-form-container">
+                        <div class="calculator-form">
+                            <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary);">Inflation Impact Calculator</h3>
+                            <div class="form-group">
+                                <label for="current-expense">Current monthly expense (₹)</label>
+                                <input type="number" id="current-expense" placeholder="e.g., 50000" min="0" value="50000">
+                            </div>
+                            <div class="form-group">
+                                <label for="years-ahead">Years from now</label>
+                                <input type="number" id="years-ahead" placeholder="e.g., 20" min="1" max="50" value="20">
+                            </div>
+                            <div class="form-group">
+                                <label for="inflation-rate-calc">Expected inflation rate (%)</label>
+                                <input type="number" id="inflation-rate-calc" placeholder="e.g., 6" min="1" max="15" step="0.1" value="6">
+                            </div>
+                            <button class="submit-btn" onclick="calculateInflation()">Calculate Future Expense</button>
+                        </div>
+                        <div class="calculator-result" id="inflation-result">
+                            <h4>Future Expense Projection</h4>
+                            <div class="result-value" id="future-expense">₹ 0</div>
+                            <p>This is what your current monthly expense will be worth in the future due to inflation.</p>
+                            <div class="result-breakdown">
+                                <h5>Inflation impact:</h5>
+                                <div id="inflation-impact"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                break;
+        }
+        
+        formsContainer.innerHTML = formHTML;
+        // Auto-calculate when form loads
+        setTimeout(() => {
+            if (type === 'retirement') calculateRetirement();
+            if (type === 'education') calculateEducation();
+            if (type === 'lumpsum') calculateLumpSum();
+            if (type === 'sip') calculateSIP();
+            if (type === 'inflation') calculateInflation();
+        }, 100);
+    }
+    
+    // Calculator Functions with improved scrolling
+    function calculateRetirement() {
+        const currentAge = parseInt(document.getElementById('current-age').value) || 35;
+        const retirementAge = parseInt(document.getElementById('retirement-age').value) || 60;
+        const currentSavings = parseInt(document.getElementById('current-savings').value) || 0;
+        const monthlySavings = parseInt(document.getElementById('monthly-savings').value) || 0;
+        const expectedReturns = parseFloat(document.getElementById('expected-returns').value) || 12;
+        
+        const yearsToRetire = retirementAge - currentAge;
+        const monthsToRetire = yearsToRetire * 12;
+        const monthlyRate = expectedReturns / 100 / 12;
+        
+        // Future value of current savings
+        const futureValueCurrent = currentSavings * Math.pow(1 + monthlyRate, monthsToRetire);
+        
+        // Future value of monthly contributions (annuity)
+        let futureValueContributions = 0;
+        if (monthlyRate > 0) {
+            futureValueContributions = monthlySavings * ((Math.pow(1 + monthlyRate, monthsToRetire) - 1) / monthlyRate) * (1 + monthlyRate);
+        } else {
+            futureValueContributions = monthlySavings * monthsToRetire;
+        }
+        
+        const totalCorpus = futureValueCurrent + futureValueContributions;
+        
+        document.getElementById('retirement-corpus').textContent = '₹ ' + Math.round(totalCorpus).toLocaleString('en-IN');
+        document.getElementById('retirement-breakdown').innerHTML = `
+            <p>From current savings: ₹ ${Math.round(futureValueCurrent).toLocaleString('en-IN')}</p>
+            <p>From future contributions: ₹ ${Math.round(futureValueContributions).toLocaleString('en-IN')}</p>
+        `;
+        
+        // Improved scrolling
+        const resultElement = document.getElementById('retirement-result');
+        scrollToResult(resultElement);
+    }
+    
+    function calculateEducation() {
+        const childAge = parseInt(document.getElementById('child-age').value) || 5;
+        const collegeAge = parseInt(document.getElementById('college-age').value) || 18;
+        const currentCost = parseInt(document.getElementById('current-cost').value) || 500000;
+        const inflationRate = parseFloat(document.getElementById('inflation-rate').value) || 7;
+        const expectedReturns = parseFloat(document.getElementById('expected-returns-edu').value) || 12;
+        
+        const yearsToCollege = collegeAge - childAge;
+        
+        // Future cost of education
+        const futureCost = currentCost * Math.pow(1 + inflationRate/100, yearsToCollege);
+        
+        // Monthly investment needed
+        const monthlyRate = expectedReturns / 100 / 12;
+        const monthsToCollege = yearsToCollege * 12;
+        
+        let monthlyInvestment = 0;
+        if (monthlyRate > 0) {
+            monthlyInvestment = futureCost * monthlyRate / ((Math.pow(1 + monthlyRate, monthsToCollege) - 1) * (1 + monthlyRate));
+        } else {
+            monthlyInvestment = futureCost / monthsToCollege;
+        }
+        
+        document.getElementById('education-corpus').textContent = '₹ ' + Math.round(futureCost).toLocaleString('en-IN');
+        document.getElementById('monthly-investment').textContent = '₹ ' + Math.round(monthlyInvestment).toLocaleString('en-IN');
+        
+        // Improved scrolling
+        const resultElement = document.getElementById('education-result');
+        scrollToResult(resultElement);
+    }
+    
+    function calculateLumpSum() {
+        const lumpsumAmount = parseInt(document.getElementById('lumpsum-amount').value) || 500000;
+        const investmentPeriod = parseInt(document.getElementById('investment-period-lumpsum').value) || 10;
+        const expectedReturns = parseFloat(document.getElementById('expected-returns-lumpsum').value) || 12;
+        
+        const months = investmentPeriod * 12;
+        const monthlyRate = expectedReturns / 100 / 12;
+        
+        // Lump sum calculation
+        const lumpsumFutureValue = lumpsumAmount * Math.pow(1 + monthlyRate, months);
+        const wealthGained = lumpsumFutureValue - lumpsumAmount;
+        
+        document.getElementById('lumpsum-future-value').textContent = '₹ ' + Math.round(lumpsumFutureValue).toLocaleString('en-IN');
+        document.getElementById('lumpsum-growth').innerHTML = `
+            <p>Total invested: ₹ ${lumpsumAmount.toLocaleString('en-IN')}</p>
+            <p>Wealth gained: ₹ ${Math.round(wealthGained).toLocaleString('en-IN')}</p>
+            <p>Return multiple: ${(lumpsumFutureValue / lumpsumAmount).toFixed(2)}x</p>
+        `;
+        
+        // Improved scrolling
+        const resultElement = document.getElementById('lumpsum-result');
+        scrollToResult(resultElement);
+    }
+    
+    function calculateSIP() {
+        const sipAmount = parseInt(document.getElementById('sip-amount').value) || 10000;
+        const investmentPeriod = parseInt(document.getElementById('investment-period-sip').value) || 10;
+        const expectedReturns = parseFloat(document.getElementById('expected-returns-sip').value) || 12;
+        
+        const months = investmentPeriod * 12;
+        const monthlyRate = expectedReturns / 100 / 12;
+        
+        // SIP calculation
+        let sipFutureValue = 0;
+        if (monthlyRate > 0) {
+            sipFutureValue = sipAmount * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate);
+        } else {
+            sipFutureValue = sipAmount * months;
+        }
+        
+        const totalInvested = sipAmount * months;
+        const wealthGained = sipFutureValue - totalInvested;
+        
+        document.getElementById('sip-future-value').textContent = '₹ ' + Math.round(sipFutureValue).toLocaleString('en-IN');
+        document.getElementById('sip-summary').innerHTML = `
+            <p>Total invested: ₹ ${totalInvested.toLocaleString('en-IN')}</p>
+            <p>Wealth gained: ₹ ${Math.round(wealthGained).toLocaleString('en-IN')}</p>
+            <p>Return multiple: ${(sipFutureValue / totalInvested).toFixed(2)}x</p>
+        `;
+        
+        // Improved scrolling
+        const resultElement = document.getElementById('sip-result');
+        scrollToResult(resultElement);
+    }
+    
+    function calculateInflation() {
+        const currentExpense = parseInt(document.getElementById('current-expense').value) || 50000;
+        const yearsAhead = parseInt(document.getElementById('years-ahead').value) || 20;
+        const inflationRate = parseFloat(document.getElementById('inflation-rate-calc').value) || 6;
+        
+        const futureExpense = currentExpense * Math.pow(1 + inflationRate/100, yearsAhead);
+        const increaseAmount = futureExpense - currentExpense;
+        const increasePercentage = ((futureExpense / currentExpense) - 1) * 100;
+        
+        document.getElementById('future-expense').textContent = '₹ ' + Math.round(futureExpense).toLocaleString('en-IN');
+        document.getElementById('inflation-impact').innerHTML = `
+            <p>Your expense will increase by ₹ ${Math.round(increaseAmount).toLocaleString('en-IN')}</p>
+            <p>That's ${increasePercentage.toFixed(1)}% higher than today</p>
+        `;
+        
+        // Improved scrolling
+        const resultElement = document.getElementById('inflation-result');
+        scrollToResult(resultElement);
+    }
+    
+    // Fix page load behavior - don't auto-scroll on initial load
+    window.addEventListener('load', function() {
+        // Set a timeout to reset the pageJustLoaded flag after page is fully rendered
+        setTimeout(() => {
+            pageJustLoaded = false;
+        }, 1000);
+    });
+</script>
+   </body>
+</html>
